@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">QuizApp</string>
+    <string name="begruessung">Wilkommen in dieser Quiz-App!</string>
+    <string name="startButton">Start</string>
+    <string-array name="difficultyarray">
+        <item>easy</item>
+        <item>medium</item>
+        <item>difficult</item>
+    </string-array>
+
+</resources>
