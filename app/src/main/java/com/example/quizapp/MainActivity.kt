@@ -12,13 +12,18 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val spinnerLanguages: Spinner = findViewById(R.id.difficulty)
-        val adapter =
-            ArrayAdapter.createFromResource(this, R.array.difficultyarray, android.R.layout.simple_spinner_item)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
 
-        spinnerLanguages.adapter = adapter
-        spinnerLanguages.onItemSelectedListener = this
+        val spinnerDifficulties: Spinner = findViewById(R.id.difficulty)
+        val adapterDifficulties = ArrayAdapter.createFromResource(this, R.array.difficultyarray, android.R.layout.simple_spinner_item)
+        adapterDifficulties.setDropDownViewResource(android.R.layout.simple_spinner_item)
+        spinnerDifficulties.adapter = adapterDifficulties
+        spinnerDifficulties.onItemSelectedListener = this
+
+        val spinnerCategories: Spinner = findViewById(R.id.category)
+        val adapterCategories = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item)
+        adapterCategories.setDropDownViewResource(android.R.layout.simple_spinner_item)
+        spinnerCategories.adapter = adapterCategories
+        spinnerCategories.onItemSelectedListener = this
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
@@ -27,6 +32,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {
+        // TODO: mach was
         // Another interface callback
     }
 

@@ -8,4 +8,15 @@
         <item>difficult</item>
     </string-array>
 
+    <string-array name="categories">
+        <item>general knowledge</item>
+        <item>science and nature</item>
+        <item>science: computers</item>
+        <item>science: mathematics</item>
+        <item>geography</item>
+        <item>history</item>
+        <item>celebrities</item>
+        <item>animals</item>
+    </string-array>
+
 </resources>
