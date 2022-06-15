@@ -2,6 +2,8 @@
     <string name="app_name">QuizApp</string>
     <string name="startButton">Start</string>
     <string name="begruessung">Willkommen!</string>
+    <string name="richtig">Richtig</string>
+    <string name="falsch">Falsch</string>
     <string-array name="difficultyarray">
         <item></item>
         <item>easy</item>
