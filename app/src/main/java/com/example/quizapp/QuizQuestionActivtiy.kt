@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.FrameLayout
 import android.widget.TextView
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.ResponseDeserializable
@@ -17,6 +18,10 @@ class QuizQuestionActivtiy : AppCompatActivity() {
     lateinit var categoryi : String
     lateinit var difficulty: String
 
+    val questionTextView : TextView = findViewById(R.id.question)
+    val questioNumberTextView : TextView = findViewById(R.id.questionNumber)
+    //val booleanQuestionLayout : FrameLayout = findViewById(R.id.)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_question_activtiy)
@@ -25,21 +30,6 @@ class QuizQuestionActivtiy : AppCompatActivity() {
         val settings: Bundle? = intent.extras
         categoryi = settings?.getString("CATEGORY")!!
         difficulty = settings?.getString("DIFFICULTY")!!
-
-        val quizQuestion: TextView = findViewById(R.id.question)
-
-      /*  val response = Fuel.get("https://opentdb.com/api.php?", listOf("amount" to "10","category" to category, "difficulty" to difficulty))
-            .response { request, response, result ->
-                println(request)
-                println(response)
-                val (bytes, error) = result
-                if (bytes != null) {
-                    println("[response bytes] ${String(bytes)}")
-                }
-            }
-
-       */
-
 
         Fuel.get("https://opentdb.com/api.php", listOf("amount" to "10", "category" to categoryi, "difficulty" to difficulty))
             .responseObject(QuizDataDeserializer()){ request, response, result ->
@@ -52,16 +42,30 @@ class QuizQuestionActivtiy : AppCompatActivity() {
 
                     is Result.Success -> {
                         val(data, _) = result
-                        //responseHandler.invoke(data as QuizResult)
-                        Log.i("TAG", "TEST")
-                        val test = ""
                     }
                 }
             }
+    }
 
+    fun showMultipleChoiceQuestion(question : String, correct_answer : String, incorrect_answers : ArrayList<String> ) {
 
     }
 
+    fun showBooleanQuestion(question: String, correct_answer: String, incorrect_answers: ArrayList<String>) {
+
+    }
+
+    fun evaluate() {
+
+    }
+
+    fun changeToMultiple() {
+
+    }
+
+    fun changeToBoolean() {
+
+    }
 
     class QuizDataDeserializer : ResponseDeserializable<QuizResult> {
         override fun deserialize(reader: Reader) = Gson().fromJson(reader, QuizResult::class.java)
@@ -71,6 +75,7 @@ class QuizQuestionActivtiy : AppCompatActivity() {
         var question : String? = null
         var correct_answer : String? = null
         var incorrect_answers : ArrayList<String> = ArrayList()
+        var type : String? = null
     }
 
     class QuizResult {
