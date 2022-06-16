@@ -4,6 +4,8 @@
     <string name="begruessung">Willkommen!</string>
     <string name="richtig">Richtig</string>
     <string name="falsch">Falsch</string>
+    <string name="Back">Zurück zum Menü</string>
+    <string name="Ok">Okay</string>
     <string-array name="difficultyarray">
         <item></item>
         <item>easy</item>
