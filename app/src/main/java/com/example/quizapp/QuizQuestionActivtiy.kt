@@ -2,6 +2,7 @@ package com.example.quizapp
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
@@ -34,7 +36,10 @@ class QuizQuestionActivtiy : AppCompatActivity(), View.OnClickListener{
     lateinit var secondOption : Button
     lateinit var thirdOption : Button
     lateinit var fourthOption : Button
+    lateinit var nextButton : Button
+    lateinit var ButtonList : List<Button>
 
+    var nextClick : Boolean = false
     var correctAnswer = ""
     var correctAnswerPosition : Int = 0
     var round = 0;
@@ -91,6 +96,10 @@ class QuizQuestionActivtiy : AppCompatActivity(), View.OnClickListener{
         thirdOption.setOnClickListener(this)
         fourthOption = findViewById(R.id.fourthButton)
         fourthOption.setOnClickListener(this)
+        nextButton = findViewById(R.id.nextQuestionButton)
+        nextButton.setOnClickListener(this)
+        ButtonList = listOf(trueButton,falseButton,firstOption,secondOption,thirdOption,fourthOption)
+
     }
 
     fun startRound() {
@@ -131,24 +140,34 @@ class QuizQuestionActivtiy : AppCompatActivity(), View.OnClickListener{
     }
     fun evaluate(button : Button) {
         correctAnswer = button.tag.toString()
+
         if(questions[round].correct_answer == correctAnswer) {
             numberOfCorrectAnswers++
+            button.setBackgroundColor(Color.GREEN)
         } else {
-            showTheToast("Leider falsch!")
+            button.setBackgroundColor(Color.RED)
+
+            ButtonList.forEach{ button1 ->
+                if(button1.tag == questions[round].correct_answer) {
+                    button1.setBackgroundColor(Color.GREEN)
+                }
+            }
         }
         round++
-        startRound()
+        nextClick = true
     }
     fun changeToMultiple() {
         multiChoiceLayout.visibility=View.VISIBLE
         booleanQuestionLayout.visibility=View.GONE
         isMultiple = true
+        ButtonList.forEach{it.setBackgroundColor(ContextCompat.getColor(this.baseContext, R.color.purple_500))}
     }
 
     fun changeToBoolean() {
         multiChoiceLayout.visibility=View.GONE
         booleanQuestionLayout.visibility=View.VISIBLE
         isMultiple = false
+        ButtonList.forEach{it.setBackgroundColor(ContextCompat.getColor(this.baseContext, R.color.purple_500))}
     }
 
     fun gameEnds() {
@@ -175,6 +194,10 @@ class QuizQuestionActivtiy : AppCompatActivity(), View.OnClickListener{
     }
 
     override fun onClick(p0: View?) {
+        if(nextClick && p0 == nextButton) {
+            nextClick = false;
+            startRound()
+        } else {
         if(!clickable) {
             return
         } else if (p0 == trueButton) {
@@ -195,7 +218,7 @@ class QuizQuestionActivtiy : AppCompatActivity(), View.OnClickListener{
         } else if (p0 == fourthOption) {
             clickable = false
             evaluate(fourthOption)
-        }
+        }}
     }
     fun firstOptionIsTrue() {
         firstOption.setText(questions[round].correct_answer)
@@ -237,11 +260,11 @@ class QuizQuestionActivtiy : AppCompatActivity(), View.OnClickListener{
         fourthOption.setText(questions[round].correct_answer)
         fourthOption.tag = questions[round].correct_answer
     }
-    fun showTheToast (message: String) {
-        val context : Context = getApplicationContext()
-        val text : String = message
-        val duration = Toast.LENGTH_SHORT;
-        val toast: Toast = Toast.makeText(context,text,duration)
-        toast.show()
-    }
+//    fun showTheToast (message: String) {
+//        val context : Context = getApplicationContext()
+//        val text : String = message
+//        val duration = Toast.LENGTH_SHORT;
+//        val toast: Toast = Toast.makeText(context,text,duration)
+//        toast.show()
+//    }
 }
